@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dev Environment Reference</title>
+    <style>
+      :root {
+        --bg: #1a1b26;
+        --sidebar-bg: #16161e;
+        --card-bg: #24283b;
+        --border: #3b4261;
+        --text: #a9b1d6;
+        --text-dark: #565f89;
+        --blue: #7aa2f7;
+        --cyan: #7dcfff;
+        --purple: #bb9af7;
+        --green: #9ece6a;
+        --yellow: #e0af68;
+        --red: #f7768e;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      /* Sidebar Architecture */
+      aside {
+        width: 280px;
+        background-color: var(--sidebar-bg);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        padding: 24px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--blue);
+        margin-bottom: 32px;
+      }
+
+      .search-box {
+        width: 100%;
+        padding: 10px 14px;
+        background-color: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        color: var(--text);
+        font-size: 0.9rem;
+        margin-bottom: 24px;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      .search-box:focus {
+        border-color: var(--cyan);
+      }
+
+      nav ul {
+        list-style: none;
+      }
+
+      nav li {
+        padding: 10px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-bottom: 6px;
+        font-size: 0.95rem;
+        transition: all 0.2s;
+        color: var(--text-dark);
+        font-weight: 500;
+      }
+
+      nav li.active,
+      nav li:hover {
+        background-color: var(--card-bg);
+        color: var(--cyan);
+      }
+
+      /* Main Workspace Content Area */
+      main {
+        flex: 1;
+        padding: 40px;
+        overflow-y: auto;
+      }
+
+      header {
+        margin-bottom: 32px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 16px;
+      }
+
+      header h1 {
+        color: var(--text);
+        font-size: 1.8rem;
+        margin-bottom: 4px;
+      }
+
+      header p {
+        color: var(--text-dark);
+        font-size: 0.95rem;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+        gap: 24px;
+      }
+
+      .card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .card h2 {
+        font-size: 1.1rem;
+        color: var(--purple);
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 8px;
+      }
+
+      .card h2 span {
+        font-size: 0.8rem;
+        color: var(--text-dark);
+        background: var(--bg);
+        padding: 2px 8px;
+        border-radius: 4px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      tr {
+        border-bottom: 1px solid rgba(59, 66, 97, 0.4);
+      }
+
+      tr:last-child {
+        border-bottom: none;
+      }
+
+      td {
+        padding: 10px 6px;
+        vertical-align: middle;
+        font-size: 0.9rem;
+      }
+
+      td.command {
+        width: 35%;
+      }
+
+      kbd {
+        background-color: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 3px 6px;
+        font-family: "JetBrainsMono Nerd Font", monospace;
+        font-size: 0.82rem;
+        color: var(--yellow);
+        box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+      }
+
+      .desc {
+        color: var(--text);
+      }
+
+      .badge-suggested {
+        color: var(--green) !important;
+        border: 1px solid var(--green) !important;
+      }
+
+      /* Hidden Class for Filtering Engine */
+      .hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- SIDEBAR FILTER AND NAVIGATION -->
+    <aside>
+      <div class="brand"><span>󰘓</span> Dotfile Docs</div>
+      <input
+        type="text"
+        id="search"
+        class="search-box"
+        placeholder="Search hotkeys or aliases..."
+      />
+      <nav>
+        <ul>
+          <li class="active" onclick="filterCategory('all')">
+            View All Ecosystems
+          </li>
+          <li onclick="filterCategory('fish')">Fish Shell & Utilities</li>
+          <li onclick="filterCategory('tmux')">Tmux Multiplexer</li>
+          <li onclick="filterCategory('nvim')">Neovim Core / LazyVim</li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTENT DATA GRID -->
+    <main>
+      <header>
+        <h1 id="page-title">Workspace Reference Engine</h1>
+        <p>
+          Interactive operational layout blueprints for environment
+          configurations.
+        </p>
+      </header>
+
+      <div class="grid" id="card-grid">
+        <!-- FISH ALIASES -->
+        <div class="card" data-category="fish">
+          <h2>System Eza Shorthands <span>Fish</span></h2>
+          <table>
+            <tr class="searchable">
+              <td class="command"><kbd>ll</kbd></td>
+              <td class="desc">
+                Long list view with icons, git status, and ISO timelines.
+              </td>
+            </tr>
+            <tr class="searchable">
+              <td class="command"><kbd>la</kbd></td>
+              <td class="desc">
+                Long list showing hidden files, tracking permissions.
+              </td>
+            </tr>
+            <tr class="searchable">
+              <td class="command"><kbd>lt</kbd></td>
+              <td class="desc">
+                Tree layout render bounded cleanly to a depth of 2 indices.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- CUSTOM PIPELINE FUNCTIONS -->
+        <div class="card" data-category="fish">
+          <h2>Custom Shell Pipelines <span>Fish Functions</span></h2>
+          <table>
+            <tr class="searchable">
+              <td class="command"><kbd>dfu</kbd></td>
+              <td class="desc">
+                <b>dotfiles_update:</b> Fetches upstream changes, pulls, and
+                safely re-links configurations.
+              </td>
+            </tr>
+            <tr class="searchable">
+              <td class="command"><kbd>gwa &lt;branch&gt;</kbd></td>
+              <td class="desc">
+                <b>Git Worktree Add:</b> Provisions clean context-isolated
+                sibling development directory paths.
+              </td>
+            </tr>
+            <tr class="searchable">
+              <td class="command"><kbd>gwr &lt;branch&gt;</kbd></td>
+              <td class="desc">
+                <b>Git Worktree Remove:</b> Safely unmounts and cleans up
+                workspace path footprints.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- PROPOSED EXTRA ALIASES -->
+        <div class="card" data-category="fish">
+          <h2>
+            Suggested Enhancements
+            <span class="badge-suggested">Highly Recommended</span>
+          </h2>
+          <table>
+            <tr class="searchable">
+              <td class="command"><kbd>v</kbd></td>
+              <td class="desc">
+                Alias for <kbd>nvim</kbd>. Blazing fast terminal editor routing.
+              </td>
+            </tr>
+            <tr class="searchable">
+              <td class="command"><kbd>lg</kbd></td>
+              <td class="desc">
+                Alias for <kbd>lazygit</kbd>. Immediate TUI invocation target.
+              </td>
+            </tr>
+            <tr class="searchable">
+              <td class="command"><kbd>cat</kbd></td>
+              <td class="desc">
+                Bypasses default mapping to utilize layout engine
+                <kbd>bat --style=plain</kbd>.
+              </td>
+            </tr>
+            <tr class="searchable">
+              <td class="command"><kbd>gst</kbd> / <kbd>gd</kbd></td>
+              <td class="desc">
+                Accelerated Git diagnostics: Shorthands for
+                <kbd>git status</kbd> and <kbd>git diff</kbd>.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- TMUX INTERACTION -->
+        <div class="card" data-category="tmux">
+          <h2>Window & Pane Mechanics <span>Tmux (Prefix: Ctrl+a)</span></h2>
+          <table>
+            <tr class="searchable">
+              <td class="command"><kbd>C-a</kbd> then <kbd>|</kbd></td>
+              <td class="desc">
+                Splits active pane <b>Horizontally</b> at the exact current path
+                link.
+              </td>
+            </tr>
+            <tr class="searchable">
+              <td class="command"><kbd>C-a</kbd> then <kbd>-</kbd></td>
+              <td class="desc">
+                Splits active pane <b>Vertically</b> at the exact current path
+                link.
+              </td>
+            </tr>
+            <tr class="searchable">
+              <td class="command"><kbd>C-a</kbd> then <kbd>c</kbd></td>
+              <td class="desc">Creates a fresh Window path layer context.</td>
+            </tr>
+            <tr class="searchable">
+              <td class="command"><kbd>C-a</kbd> then <kbd>h/j/k/l</kbd></td>
+              <td class="desc">
+                Directional vim navigation between splits (Left, Down, Up,
+                Right).
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- NEOVIM CORE MAPS -->
+        <div class="card" data-category="nvim">
+          <h2>Window Navigation & Utilities <span>Neovim / LazyVim</span></h2>
+          <table>
+            <tr class="searchable">
+              <td class="command"><kbd>Ctrl + h / j / k / l</kbd></td>
+              <td class="desc">
+                Instant, integrated cross-window movement mappings (Left, Down,
+                Up, Right).
+              </td>
+            </tr>
+            <tr class="searchable">
+              <td class="command"><kbd>Esc</kbd></td>
+              <td class="desc">
+                Clears active text lookup search highlights dynamically.
+              </td>
+            </tr>
+            <tr class="searchable">
+              <td class="command"><kbd>Space</kbd></td>
+              <td class="desc">
+                Global <b>&lt;leader&gt;</b> operational macro prefix key.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- NEOVIM VISUAL BLOCKS -->
+        <div class="card" data-category="nvim">
+          <h2>
+            Visual Mode Interventions <span>Neovim Block Operations</span>
+          </h2>
+          <table>
+            <tr class="searchable">
+              <td class="command">
+                <kbd>J</kbd> <span>(In Visual Mode)</span>
+              </td>
+              <td class="desc">
+                Shifts the entirely highlighted chunk of text downstream 1 line
+                code index.
+              </td>
+            </tr>
+            <tr class="searchable">
+              <td class="command">
+                <kbd>K</kbd> <span>(In Visual Mode)</span>
+              </td>
+              <td class="desc">
+                Shifts the entirely highlighted chunk of text upstream 1 line
+                code index.
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <!-- LIVE TEXT FILTERING & SIDEBAR ROUTING ENGINE JavaScript -->
+    <script>
+      const searchInput = document.getElementById("search");
+      const rows = document.querySelectorAll(".searchable");
+      const cards = document.querySelectorAll(".card");
+      const navItems = document.querySelectorAll("nav li");
+
+      // Instant Lookup Text Filter Logic
+      searchInput.addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase();
+
+        cards.forEach((card) => {
+          let cardHasMatch = false;
+          const items = card.querySelectorAll(".searchable");
+
+          items.forEach((item) => {
+            const content = item.textContent.toLowerCase();
+            if (content.includes(query)) {
+              item.classList.remove("hidden");
+              cardHasMatch = true;
+            } else {
+              item.classList.add("hidden");
+            }
+          });
+
+          if (cardHasMatch || query === "") {
+            card.classList.remove("hidden");
+          } else {
+            card.classList.add("hidden");
+          }
+        });
+      });
+
+      // Category Panel Filtering Engine
+      function filterCategory(category) {
+        // Update Active Class Layout Links
+        navItems.forEach((item) => item.classList.remove("active"));
+        event.currentTarget.classList.add("active");
+
+        // Reset Search Input to avoid compound filter layers
+        searchInput.value = "";
+
+        cards.forEach((card) => {
+          const cardCategory = card.getAttribute("data-category");
+          const items = card.querySelectorAll(".searchable");
+
+          // Ensure hidden row assets revert clean state
+          items.forEach((item) => item.classList.remove("hidden"));
+
+          if (category === "all" || cardCategory === category) {
+            card.classList.remove("hidden");
+          } else {
+            card.classList.add("hidden");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -18,7 +18,7 @@ log_warn()    { echo -e "${YELLOW}[WARN]${RC} $1"; }
 log_error()   { echo -e "${RED}[ERROR]${RC} $1"; }
 
 echo "=================================================="
-echo "    Deploying Tokyo Night Dev Ecosystem Layout     "
+echo "    Deploying Dotfile Ecosystem Layout     "
 echo "=================================================="
 
 # Check and boot baseline shell tools

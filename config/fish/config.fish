@@ -1,4 +1,4 @@
-# Tokyo Night Dev Shell Configuration Entrypoint
+# Shell Configuration Entrypoint
 # Path: ~/.config/fish/config.fish
 
 if status is-interactive
@@ -15,7 +15,15 @@ if status is-interactive
         alias la="ls -lah --color=auto"
     fi
     alias g="git"
+	alias gaa="git add ."
+	alias gp="git push"
+	alias gl="git pull"
+	alias gst="git status"
+	alias gd="git diff"
     alias dfu="dotfiles_update"
+	alias v="nvim"
+	alias lg="lazygit"
+	alias cat="bat --style=plain"
 
     # --- Heavy Engine Interventions: Advanced FZF ---
     set -gx FZF_DEFAULT_OPTS "--height 45% --layout=reverse --border=rounded --inline-info --color='pointer:#7dcfff,hdr:#bb9af7,info:#e0af68,marker:#9ece6a'"
