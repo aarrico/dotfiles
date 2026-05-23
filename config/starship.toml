@@ -1,0 +1,65 @@
+format = """
+$directory\
+$git_branch\
+$git_status\
+$rust\
+$node\
+$python\
+$golang\
+$cmd_duration\
+$line_break\
+$character"""
+
+scan_timeout = 10
+
+[character]
+success_symbol = "[❯](bold #7dcfff)"
+error_symbol = "[❯](bold #f7768e)"
+
+[directory]
+truncation_length = 4
+style = "bold #7aa2f7"
+read_only = " 🔒"
+
+[git_branch]
+symbol = " "
+style = "bold #bb9af7"
+format = "on [$symbol$branch]($style) "
+
+[git_status]
+style = "bold #f7768e"
+format = "[[$all_status$ahead_behind]]($style) "
+conflicted = "="
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+untracked = "?"
+stashed = "$"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "✘"
+
+[cmd_duration]
+min_time = 2000
+format = "took [󱎫 $duration](bold #e0af68) "
+
+[node]
+symbol = "󰎙 "
+style = "#9ece6a"
+format = "via [$symbol($version)]($style) "
+
+[rust]
+symbol = "🦀 "
+style = "bold #ff9e64"
+format = "via [$symbol($version)]($style) "
+
+[python]
+symbol = " "
+style = "bold #e0af68"
+format = "via [$symbol($version)]($style) "
+
+[golang]
+symbol = " "
+style = "bold #7dcfff"
+format = "via [$symbol($version)]($style) "
