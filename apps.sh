@@ -59,13 +59,13 @@ if command -v gh &>/dev/null; then
         # 1. Handle GH CLI Authentication
         if ! gh auth status &>/dev/null; then
             log_info "Launching interactive GitHub CLI authentication login..."
-            gh auth login --web --protocols ssh
+            gh auth login --web --git-protocol ssh
         else
             log_info "GitHub CLI is already authenticated."
         fi
 
         # 2. Handle SSH Key Generation
-        SSH_KEY="$HOME/.ssh/id_ed25519"
+        SSH_KEY="$HOME/.ssh/github"
         if [ ! -f "$SSH_KEY" ]; then
             log_info "No Ed25519 SSH key detected. Generating a new secure keypair..."
             echo -n -e "\033[0;33m[PROMPT]\033[0m Enter your GitHub email address: "
@@ -81,8 +81,31 @@ if command -v gh &>/dev/null; then
         else
             log_info "Existing SSH key discovered at $SSH_KEY."
         fi
+	
+	# 3. Configure local SSH routing for the custom 'github' key name
+        log_info "Configuring SSH local config file for custom key routing..."
+        SSH_CONFIG="$HOME/.ssh/config"
+        
+        # Ensure the file exists with strict secure permissions
+        touch "$SSH_CONFIG"
+        chmod 600 "$SSH_CONFIG"
 
-        # 3. Register the SSH Key with GitHub via the CLI
+        if ! grep -q "Host github.com" "$SSH_CONFIG"; then
+            cat << EOF >> "$SSH_CONFIG"
+
+# Dedicated routing profile for GitHub using custom identity keys
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/github
+  IdentitiesOnly yes
+EOF
+            log_info "SSH config route cleanly mapped to ~/.ssh/github."
+        else
+            log_info "An entry for github.com already exists in your SSH config."
+        fi
+        
+	# 4. Register the SSH Key with GitHub via the CLI
         log_info "Checking if this machine's SSH key is registered with your GitHub account..."
         DEVICE_NAME="DevBox-$(hostname)-$(date +%Y%m%d)"
         
