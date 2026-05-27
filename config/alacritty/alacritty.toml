@@ -1,9 +1,9 @@
 [window]
-opacity = 0.93
+opacity = 1.0
 blur = true
 
 [font]
-size = 11.5
+size = 12
 
 [font.normal]
 family = "JetBrainsMono Nerd Font"
