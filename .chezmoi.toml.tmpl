@@ -1,0 +1,15 @@
+{{- $isWSL := false -}}
+{{- if hasKey .chezmoi.kernel "osrelease" -}}
+{{-   if or (contains "microsoft" (lower .chezmoi.kernel.osrelease)) (contains "wsl" (lower .chezmoi.kernel.osrelease)) -}}
+{{-     $isWSL = true -}}
+{{-   end -}}
+{{- end -}}
+{{- $winUser := "" -}}
+{{- if $isWSL -}}
+{{-   $winUser = promptStringOnce . "winUser" "Windows username (for the /mnt/c WezTerm + font bridge)" -}}
+{{- end -}}
+sourceDir = {{ .chezmoi.sourceDir | quote }}
+
+[data]
+    isWSL = {{ $isWSL }}
+    winUser = {{ $winUser | quote }}

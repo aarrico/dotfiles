@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+{{ if eq .chezmoi.os "linux" -}}
+pkgs=(fish starship fzf fd eza bat ripgrep zoxide fnm uv tmux neovim lazygit github-cli)
+{{ if not .isWSL -}}
+pkgs+=(wezterm)
+{{ end -}}
+if command -v paru &>/dev/null; then
+    helper=paru
+elif command -v yay &>/dev/null; then
+    helper=yay
+else
+    sudo pacman -S --needed --noconfirm base-devel git
+    tmp="$(mktemp -d)"
+    git clone https://aur.archlinux.org/paru.git "$tmp/paru"
+    (cd "$tmp/paru" && makepkg -si --noconfirm)
+    helper=paru
+fi
+"$helper" -S --needed --noconfirm "${pkgs[@]}"
+{{ if not .isWSL -}}
+if ! fc-list | grep -qi "Lilex Nerd Font"; then
+    curl -fsSL -o /tmp/Lilex.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Lilex.zip
+    mkdir -p "$HOME/.local/share/fonts/Lilex"
+    unzip -o /tmp/Lilex.zip -d "$HOME/.local/share/fonts/Lilex"
+    fc-cache -f
+fi
+{{ end -}}
+{{ else if eq .chezmoi.os "darwin" -}}
+brew install fish starship fzf fd eza bat ripgrep zoxide fnm uv tmux neovim lazygit gh
+brew install --cask wezterm font-lilex-nerd-font
+{{ end -}}

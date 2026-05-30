@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+{{ if .isWSL -}}
+win_user={{ .winUser | quote }}
+win_home="/mnt/c/Users/$win_user"
+if [ ! -d "$win_home" ]; then
+    echo "Windows home $win_home not found; correct winUser via: chezmoi init" >&2
+    exit 1
+fi
+wez_dir="$win_home/.config/wezterm"
+mkdir -p "$wez_dir"
+sed "s/__WSL_DISTRO__/${WSL_DISTRO_NAME}/g" "$HOME/.config/wezterm/wezterm.lua" > "$wez_dir/wezterm.lua"
+
+font_drop="$win_home/Downloads/LilexNerdFont"
+mkdir -p "$font_drop"
+if ! ls "$font_drop"/*.ttf &>/dev/null; then
+    curl -fsSL -o /tmp/Lilex.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Lilex.zip
+    unzip -o /tmp/Lilex.zip -d "$font_drop"
+    echo "Lilex Nerd Font .ttf files placed in $font_drop - install them on Windows (select all, right-click, Install)."
+fi
+{{ end -}}

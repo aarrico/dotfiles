@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+if command -v fnm &>/dev/null; then
+    eval "$(fnm env --shell bash)"
+    fnm install --lts
+    node_v="$(fnm ls | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | sort -V | tail -1)"
+    fnm default "$node_v"
+fi
