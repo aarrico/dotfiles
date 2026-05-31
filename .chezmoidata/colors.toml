@@ -1,0 +1,28 @@
+# Edit a value here then run `chezmoi apply`
+[colors]
+# base
+bg           = "#222436"
+bg_dark      = "#1e2030"
+fg           = "#c8d3f5"
+cursor       = "#c8d3f5"
+selection    = "#2d3f76"
+
+# 16-color ANSI (used by WezTerm)
+black        = "#1b1d2b"
+bright_black = "#444a73"
+red          = "#ff757f"
+green        = "#c3e88d"
+yellow       = "#ffc777"
+blue         = "#82aaff"
+magenta      = "#9f64e3"
+cyan         = "#86e1fc"
+white        = "#828bb8"
+bright_white = "#c8d3f5"
+
+# semantic aliases (used by starship / tmux / fzf)
+pink         = "#ff757f"
+orange       = "#ff966c"
+purple       = "#c099ff"
+teal         = "#4fd6be"
+border       = "#3b4261"
+inactive     = "#636da6"

@@ -3,7 +3,7 @@ $directory\
 $git_branch\
 $git_status\
 $rust\
-$node\
+$nodejs\
 $python\
 $golang\
 $cmd_duration\
@@ -13,22 +13,22 @@ $character"""
 scan_timeout = 10
 
 [character]
-success_symbol = "[❯](bold #7dcfff)"
-error_symbol = "[❯](bold #f7768e)"
+success_symbol = "[❯](bold {{ .colors.cyan }})"
+error_symbol = "[❯](bold {{ .colors.pink }})"
 
 [directory]
 truncation_length = 4
-style = "bold #7aa2f7"
+style = "bold {{ .colors.blue }}"
 read_only = " 🔒"
 
 [git_branch]
-symbol = " "
-style = "bold #bb9af7"
+symbol = " "
+style = "bold {{ .colors.purple }}"
 format = "on [$symbol$branch]($style) "
 
 [git_status]
-style = "bold #f7768e"
-format = '[\[$all_status$ahead_behind\]]($style) '
+style = "bold {{ .colors.pink }}"
+format = '([\[$all_status$ahead_behind\]]($style) )'
 conflicted = "="
 ahead = "⇡"
 behind = "⇣"
@@ -42,24 +42,24 @@ deleted = "✘"
 
 [cmd_duration]
 min_time = 2000
-format = "took [󱎫 $duration](bold #e0af68) "
+format = "took [󱎫 $duration](bold {{ .colors.yellow }}) "
 
 [nodejs]
 symbol = "󰎙 "
-style = "#9ece6a"
+style = "{{ .colors.green }}"
 format = "via [$symbol($version)]($style) "
 
 [rust]
 symbol = "🦀 "
-style = "bold #ff9e64"
+style = "bold {{ .colors.orange }}"
 format = "via [$symbol($version)]($style) "
 
 [python]
-symbol = " "
-style = "bold #e0af68"
+symbol = " "
+style = "bold {{ .colors.yellow }}"
 format = "via [$symbol($version)]($style) "
 
 [golang]
-symbol = " "
-style = "bold #7dcfff"
+symbol = " "
+style = "bold {{ .colors.cyan }}"
 format = "via [$symbol($version)]($style) "

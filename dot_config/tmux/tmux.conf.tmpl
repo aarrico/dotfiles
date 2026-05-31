@@ -21,14 +21,14 @@ bind l select-pane -R
 set -g default-terminal "xterm-256color"
 set -as terminal-features ",xterm-256color:RGB"
 
-set -g status-style "bg=default,fg=#a9b1d6"
-set -g pane-border-style "fg=#3b4261"
-set -g pane-active-border-style "fg=#7aa2f7"
-set -g status-left "#[fg=#7aa2f7,bold] 󰘓 #S #[fg=#3b4261]▪ "
+set -g status-style "bg=default,fg={{ .colors.fg }}"
+set -g pane-border-style "fg={{ .colors.border }}"
+set -g pane-active-border-style "fg={{ .colors.blue }}"
+set -g status-left "#[fg={{ .colors.blue }},bold] 󰘓 #S #[fg={{ .colors.border }}]▪ "
 set -g status-left-length 50
-set -g status-right "#[fg=#bb9af7]󱎫 %H:%M #[fg=#3b4261]▪ #[fg=#e0af68] %Y-%m-%d "
+set -g status-right "#[fg={{ .colors.purple }}]󱎫 %H:%M #[fg={{ .colors.border }}]▪ #[fg={{ .colors.yellow }}] %Y-%m-%d "
 set -g status-justify left
-set -g window-status-style "fg=#565f89"
+set -g window-status-style "fg={{ .colors.inactive }}"
 set -g window-status-format " #I:#W "
-set -g window-status-current-style "fg=#7dcfff,bold"
+set -g window-status-current-style "fg={{ .colors.cyan }},bold"
 set -g window-status-current-format " #I:#W* "

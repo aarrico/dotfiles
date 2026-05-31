@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
+
 {{ if .isWSL -}}
-win_user={{ .winUser | quote }}
+win_user="$(wslvar USERNAME 2>/dev/null | tr -d '\r')"
+if [ -z "$win_user" ]; then
+    win_user="$(cmd.exe /c 'echo %USERNAME%' 2>/dev/null | tr -d '\r')"
+fi
 win_home="/mnt/c/Users/$win_user"
 if [ ! -d "$win_home" ]; then
-    echo "Windows home $win_home not found; correct winUser via: chezmoi init" >&2
+    echo "Could not locate Windows home for user '$win_user' at $win_home" >&2
     exit 1
 fi
 wez_dir="$win_home/.config/wezterm"

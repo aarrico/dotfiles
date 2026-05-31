@@ -8,7 +8,7 @@ if status is-interactive
         uv generate-shell-completion fish | source
     end
 
-    set -gx FZF_DEFAULT_OPTS "--height 45% --layout=reverse --border=rounded --inline-info --color='pointer:#7dcfff,hdr:#bb9af7,info:#e0af68,marker:#9ece6a'"
+    set -gx FZF_DEFAULT_OPTS "--height 45% --layout=reverse --border=rounded --inline-info --color='bg+:-1,fg+:{{ .colors.fg }},hl:{{ .colors.blue }},hl+:{{ .colors.cyan }},pointer:{{ .colors.cyan }},header:{{ .colors.purple }},info:{{ .colors.yellow }},marker:{{ .colors.green }},prompt:{{ .colors.pink }},border:{{ .colors.border }}'"
     set -gx fzf_fd_opts --hidden --exclude .git --exclude node_modules --exclude .cache
 
     if type -q eza

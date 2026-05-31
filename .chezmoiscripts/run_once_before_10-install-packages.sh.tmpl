@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 {{ if eq .chezmoi.os "linux" -}}
-pkgs=(fish starship fzf fd eza bat ripgrep zoxide fnm uv tmux neovim lazygit github-cli)
-{{ if not .isWSL -}}
+pkgs=(fish starship fzf fd eza bat ripgrep zoxide fnm uv tmux neovim lazygit github-cli unzip)
+{{ if .isWSL -}}
+pkgs+=(wslu)
+{{ else -}}
 pkgs+=(wezterm)
 {{ end -}}
 if command -v paru &>/dev/null; then

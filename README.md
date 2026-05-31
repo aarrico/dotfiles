@@ -1,17 +1,15 @@
 # My Dotfiles Workspace
 
-A configuration layout engineered specifically around Fish, Starship, Tmux, Alacritty, and LazyVim using a unified Tokyo Night theme. Inspired by a fresh CachyOS installs on my machines.
+A [chezmoi](https://www.chezmoi.io/)-managed configuration around Fish, Starship, Tmux, WezTerm, and LazyVim using a Tokyo Night theme. Targets WSL2/Arch, native Linux, and macOS from a single source tree.
 
-## Core Installation Steps
+## Install on a new machine
 
 ```bash
-# 1. Run the core installer to link configs and map functions
-chmod +x install.sh && ./install.sh
-
-# 2. Extract runtimes, code managers, tool utilities, and dev fonts
-chmod +x apps.sh && ./apps.sh
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply <username>
 ```
 
-## Maintenance Updates
+chezmoi clones this repo, detects the machine (`isWSL`, `os`), then installs packages and applies configs via the `run_once_`/`run_onchange_` scripts in `.chezmoiscripts/`. On WSL the Windows username is auto-detected (`wslvar`) to bridge WezTerm + the Lilex Nerd Font to the Windows host.
 
-Execute **`dfu`** in any active terminal shell layer to seamlessly verify git remote states, execute pulls, and align your entire workspace automatically.
+## Maintenance updates
+
+Run **`dfu`** in any shell to pull the latest dotfiles and re-apply them — it's an alias for `chezmoi update` (pull + apply).
