@@ -148,3 +148,19 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply <username>
 - **Retheme colors:** edit `.chezmoidata/colors.toml` (single Tokyo Night Moon palette), then `chezmoi apply` — updates WezTerm, starship, tmux, and fzf together
 - **Edit a config so it's tracked:** `chezmoi edit <target>` then commit in `~/repos/dotfiles`
 - **Update fish plugins:** edit `dot_config/fish/fish_plugins`, then `chezmoi apply` (the `run_onchange` hook runs `fisher update`)
+
+### Claude setup
+
+Claude's config is edited live, so re-capture changes with `chezmoi add` or they won't sync — and may be reverted on the next `dfu`.
+
+> ⚠️ Claude **rewrites `~/.claude/settings.json`** when you enable/disable a plugin → re-capture it, or `apply` reverts the change.
+
+| You changed…                        | Capture step                                                       |
+| ----------------------------------- | ----------------------------------------------------------------- |
+| Added a manifest skill (`npx skills add`) | `chezmoi add ~/.agents/.skill-lock.json ~/.claude/skills/<name>` |
+| Vendored a skill manually           | `chezmoi add ~/.agents/skills/<name> ~/.claude/skills/<name>`      |
+| Enabled/disabled a plugin           | `chezmoi add ~/.claude/settings.json`                             |
+| Edited `CLAUDE.md` / hook / statusline | `chezmoi add <that file>`                                       |
+| Updated a memory fact               | re-copy into `.chezmoitemplates/claude-memory/`                   |
+
+Then `chezmoi diff` (expect clean) and commit in `~/repos/dotfiles`.
