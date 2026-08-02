@@ -1,28 +1,32 @@
-# Edit a value here then run `chezmoi apply`
+# City Lights (https://citylights.xyz/)
+# Values taken from the official VSCode theme:
+#   Yummygum/city-lights-syntax-vsc → themes/City Lights-color-theme.json
+# Edit a value here then run `chezmoi apply` — every terminal, prompt,
+# and multiplexer config templates off this single file.
 [colors]
 # base
-bg           = "#222436"
-bg_dark      = "#1e2030"
-fg           = "#c8d3f5"
-cursor       = "#c8d3f5"
-selection    = "#2d3f76"
+bg           = "#1d252c"  # editor.background
+bg_dark      = "#171d23"  # sideBar / panel / statusBar background
+fg           = "#b7c5d3"  # editor.foreground
+cursor       = "#5ec4ff"
+selection    = "#28323a"
 
-# 16-color ANSI (used by WezTerm)
-black        = "#1b1d2b"
-bright_black = "#444a73"
-red          = "#ff757f"
-green        = "#c3e88d"
-yellow       = "#ffc777"
-blue         = "#82aaff"
-magenta      = "#9f64e3"
-cyan         = "#86e1fc"
-white        = "#828bb8"
-bright_white = "#c8d3f5"
+# 16-color ANSI (used by WezTerm + Ghostty)
+black        = "#1d252c"
+bright_black = "#41505e"  # comment
+red          = "#d95468"  # invalid
+green        = "#8bd49c"
+yellow       = "#ebbf83"
+blue         = "#5ec4ff"  # keyword
+magenta      = "#b62d65"
+cyan         = "#70e1e8"  # entity
+white        = "#b7c5d3"
+bright_white = "#d9e5f2"
 
 # semantic aliases (used by starship / tmux / fzf)
-pink         = "#ff757f"
-orange       = "#ff966c"
-purple       = "#c099ff"
-teal         = "#4fd6be"
-border       = "#3b4261"
-inactive     = "#636da6"
+pink         = "#e27e8d"  # constant
+orange       = "#d98e48"
+purple       = "#68a1f0"  # City Lights has no true purple; soft blue stands in
+teal         = "#008b94"  # storage
+border       = "#41505e"
+inactive     = "#718ca1"  # punctuation / variable

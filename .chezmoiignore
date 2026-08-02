@@ -2,3 +2,12 @@ README.md
 CHEATSHEET.md
 docs
 LICENSE
+
+# One terminal per machine. WSL still needs the Linux-side wezterm.lua —
+# run_onchange_after_40-wsl-wezterm.sh reads it as the source for the copy
+# it writes to the Windows host.
+{{ if .isWSL }}
+.config/ghostty
+{{ else }}
+.config/wezterm
+{{ end }}

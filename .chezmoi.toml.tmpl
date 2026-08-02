@@ -4,7 +4,10 @@
 {{-     $isWSL = true -}}
 {{-   end -}}
 {{- end -}}
-sourceDir = {{ .chezmoi.sourceDir | quote }}
+{{/* Must be an absolute path, NOT .chezmoi.sourceDir — that is self-referential
+     and permanently pins the config to whatever directory `chezmoi init` first
+     ran in, silently stranding edits made anywhere else. */ -}}
+sourceDir = {{ printf "%s/repos/dotfiles" .chezmoi.homeDir | quote }}
 
 [data]
     isWSL = {{ $isWSL }}

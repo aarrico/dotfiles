@@ -37,6 +37,8 @@ config.colors = {
     },
 }
 
+-- Family name of the Nerd-patched build (same on Windows and Linux).
+-- Switch to "Lilex Nerd Font Mono" if icon glyphs overlap their neighbours.
 config.font = wezterm.font("Lilex Nerd Font")
 config.font_size = 11.5
 config.window_background_opacity = 1.0
@@ -44,9 +46,13 @@ config.hide_tab_bar_if_only_one_tab = true
 config.window_decorations = "TITLE | RESIZE"
 
 if wezterm.target_triple:find("windows") then
-    config.default_domain = "WSL:archlinux"
+    -- Substituted by run_onchange_after_40-wsl-wezterm.sh when this file is
+    -- copied to the Windows host; stays literal in the Linux-side copy, which
+    -- is only ever used as that script's source.
+    config.default_domain = "WSL:__WSL_DISTRO__"
 end
 
+config.enable_kitty_keyboard = true
 config.keys = {
     { key = "d", mods = "CTRL|SHIFT", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
     { key = "e", mods = "CTRL|SHIFT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
