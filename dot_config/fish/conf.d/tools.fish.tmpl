@@ -20,7 +20,7 @@ if status is-interactive
     alias gaa="git add ."
     alias gp="git push"
     alias gl="git pull"
-    alias gst="git status"
+    alias gst="git st"
     alias gd="git diff"
     alias dfu="dotfiles_update"
     alias v="nvim"
@@ -28,4 +28,5 @@ if status is-interactive
     alias vi="nvim"
     alias lg="lazygit"
     alias cat="bat --style=plain"
+    alias update-codex="sh -c 'curl -fsSL https://chatgpt.com/codex/install.sh | CODEX_NON_INTERACTIVE=1 sh'"
 end
